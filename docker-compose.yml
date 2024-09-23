@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  task_manager_postgres:
+    image: postgres:14-alpine
+    container_name: task_manager_postgres
+    hostname: task_manager_postgres
+    restart: always
+    ports:
+      - 5436:5432
+    environment:
+      - POSTGRES_PASSWORD=holdmn
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=task_manager_postgres
+    networks:
+      - task_manager
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # сохраняем данные в том
+
+  # task_manager_bot: 
+  #   container_name: task_manager_bot
+  #   hostname: task_manager_bot
+  #   restart: always
+  #   ports:
+  #     - 5678:5678
+  #   build:
+  #     context: "./bot"
+  #   networks:
+  #     - task_manager
+  #   depends_on:
+  #     - task_manager_postgres
+
+networks:
+  task_manager:
+    driver: bridge
+
+volumes:
+  postgres_data: {} 
