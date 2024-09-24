@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 COPY . .
 
-ENV DATABASE=postgresql+asyncpg://postgres:holdmn@task_manager/task_manager_postgres
-ENV BOT_TOKEN=7670322043:AAHw-6_DIFO2v-R47oBUcn3MC81jOO-xZHU
+ENV DATABASE=
+ENV BOT_TOKEN=
 
 CMD ["python", "main.py"]

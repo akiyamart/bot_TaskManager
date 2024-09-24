@@ -7,28 +7,28 @@ services:
     hostname: task_manager_postgres
     restart: always
     ports:
-      - 5436:5432
+      - 
     environment:
-      - POSTGRES_PASSWORD=holdmn
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=task_manager_postgres
+      - POSTGRES_PASSWORD=
+      - POSTGRES_USER=
+      - POSTGRES_DB=
     networks:
       - task_manager
     volumes:
       - postgres_data:/var/lib/postgresql/data  # сохраняем данные в том
 
-  # task_manager_bot: 
-  #   container_name: task_manager_bot
-  #   hostname: task_manager_bot
-  #   restart: always
-  #   ports:
-  #     - 5678:5678
-  #   build:
-  #     context: "./bot"
-  #   networks:
-  #     - task_manager
-  #   depends_on:
-  #     - task_manager_postgres
+  task_manager_bot: 
+    container_name: task_manager_bot
+    hostname: task_manager_bot
+    restart: always
+    ports:
+      - 
+    build:
+      context: "./bot"
+    networks:
+      - task_manager
+    depends_on:
+      - task_manager_postgres
 
 networks:
   task_manager:
