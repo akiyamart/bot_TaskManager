@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 
 from ..tools.decorators import db_session_decorator, check_user_decorator
+from ..states import Assistant
 from ..ui import menu, back_to_menu
 from ..schemas import ShowUserResponse
 
@@ -14,15 +15,10 @@ router = Router()
 @router.message(Command("start"))
 @db_session_decorator
 @check_user_decorator
-async def start_handler(message: Message, db: AsyncSession, user: ShowUserResponse):
-    id = message.from_user.id
-    username = message.from_user.username
-
+async def start_handler(message: Message, db: AsyncSession, user: ShowUserResponse, state: FSMContext):
     try:
-        print(user)
-
-        await message.answer(text=f"Привет, {username}", reply_markup=menu())
-
+        await state.clear()
+        await message.answer(text=f"Привет, {message.from_user.username}! Я виртуальный менеджер-ассистент. Моя цель — помогать тебе с управлением твоими задачами.\n\nПожалуйста, выбери, что ты хочешь сделать 😌", reply_markup=menu())
     except Exception as e:
         print(f"Ошибка в start_handler: {e}")
         await message.answer(
@@ -33,7 +29,7 @@ async def start_handler(message: Message, db: AsyncSession, user: ShowUserRespon
 @router.callback_query(F.data == "menu")
 @router.message(Command("menu"))
 async def menu_handler(invoice: Message | CallbackQuery, state: FSMContext): 
-    await state.clear()
+    await state.set_state(Assistant.default)
     if hasattr(invoice, "data"): 
         message = invoice.message
     else: 
