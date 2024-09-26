@@ -15,7 +15,7 @@ services:
     networks:
       - task_manager
     volumes:
-      - postgres_data:/var/lib/postgresql/data  # сохраняем данные в том
+      - postgres_data:/var/lib/postgresql/data
 
   task_manager_bot: 
     container_name: task_manager_bot

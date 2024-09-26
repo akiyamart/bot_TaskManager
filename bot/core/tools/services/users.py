@@ -22,11 +22,10 @@ async def get_user(body: UserCreate, db: AsyncSession) -> Union[ShowUserResponse
         )
 
         if not user:
-            print("Юзер не найдён в бд, добавляю...")
             user = await create_new_user(
-                UserCreate(
-                    id=body.id,
-                ), user_dal=user_dal)
+                UserCreate(id=body.id), 
+                user_dal=user_dal
+            )
 
         return ShowUserResponse(
             id = user.id

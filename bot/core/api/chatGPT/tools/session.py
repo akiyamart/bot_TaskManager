@@ -28,7 +28,7 @@ class OpenAISession:
         url = "https://api.openai.com/v1/chat/completions"
         full_messages = self._add_pre_prompt(messages, system_prompt)
         json_data = {
-            "model": "gpt-4o-mini",
+            "model": "gpt-4o",
             "messages": full_messages
         }
         return await self._post_request(url, json_data)

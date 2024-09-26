@@ -12,9 +12,7 @@ def check_user_decorator(handler):
     async def wrapper(invoice: Message | CallbackQuery, db: async_sessionmaker, *args, **kwargs):
         try:
             id = invoice.from_user.id
-            user = await get_user(UserCreate(
-                id=id,
-            ), db=db)
+            user = await get_user(UserCreate(id=id), db=db)
             return await handler(invoice, db=db, user=user, *args, **kwargs)
         except Exception as e:
             print(f"Error: {e}")

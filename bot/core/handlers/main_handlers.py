@@ -34,14 +34,11 @@ async def menu_handler(invoice: Message | CallbackQuery, state: FSMContext):
         message = invoice.message
     else: 
         message = invoice
+
     await message.answer(
         text="Выбери действие ниже 👇",
         reply_markup=menu()
     )
-    try: 
-        await invoice.message.delete()
-    except: 
-        pass
 
 @router.callback_query(F.data == "info")
 async def info_handler(callback_query: CallbackQuery, state: FSMContext):

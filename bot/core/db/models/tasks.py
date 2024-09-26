@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Text, Integer, ForeignKey, Enum, TIMESTAMP, Interval
+from sqlalchemy import Column, String, Text, Integer, ForeignKey, Enum, TIMESTAMP
 from datetime import datetime
 import enum
 
@@ -18,9 +18,9 @@ class Task(Model):
     title = Column(String(255), nullable=False)
     description = Column(Text, nullable=True)
     status = Column(Enum(TaskStatus), default=TaskStatus.pending)
-    created_at = Column(TIMESTAMP, default=datetime.now)
+    created_at = Column(TIMESTAMP, default=datetime.now())
     due_date = Column(TIMESTAMP, nullable=True)
-    duration = Column(Interval, nullable=True)
+    end_time = Column(TIMESTAMP, nullable=True)
 
     def __repr__(self):
         return f"<Task(title={self.title}, status={self.status.value})>"

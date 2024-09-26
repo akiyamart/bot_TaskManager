@@ -4,7 +4,6 @@ from aiogram import Bot, Dispatcher
 
 class Config:
     BOT_TOKEN = os.getenv("BOT_TOKEN", "")
-    # BOT_TOKEN = os.getenv("BOT_TOKEN", "")
     DATABASE = os.getenv("DATABASE_DSN", "")
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
     PROXY_USERNAME = os.getenv("PROXY_USERNAME", "")
