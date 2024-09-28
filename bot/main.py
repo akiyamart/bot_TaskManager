@@ -3,6 +3,7 @@ import asyncio
 from core.settings import bot, dp
 from core.commands import set_commands
 from core.settings import dp_setting
+from core.handlers.tasks_handlers import scheduler
 
 async def on_startup():
     print("Бот запущен")
@@ -21,3 +22,4 @@ async def main():
 
 if __name__ == '__main__':  
     asyncio.run(main())
+    asyncio.create_task(scheduler.run_pending())

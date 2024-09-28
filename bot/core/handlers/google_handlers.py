@@ -15,12 +15,13 @@ from ..schemas import ShowUserResponse, GoogleOAuthCreate, GoogleOAuthDelete, Sh
 router = Router()
 
 @router.callback_query(F.data == "google_sync")
-async def google_handler(invoice: CallbackQuery, state: FSMContext): 
+async def google_handler(callback_query: CallbackQuery, state: FSMContext): 
+    await callback_query.answer()
     await state.set_state(Assistant.google_oauth)
-    if hasattr(invoice, "data"): 
-        message = invoice.message
+    if hasattr(callback_query, "data"): 
+        message = callback_query.message
     else: 
-        message = invoice
+        message = callback_query
     await message.answer(
         text="Вышлите файл формата .json",
         reply_markup=google_oauth()
@@ -29,7 +30,8 @@ async def google_handler(invoice: CallbackQuery, state: FSMContext):
 @router.callback_query(F.data == "google_sync_delete")
 @db_session_decorator
 @check_user_decorator
-async def google_delete_handler(callback_query: CallbackQuery, db: AsyncSession, user: ShowUserResponse, state: FSMContext): 
+async def google_delete_handler(callback_query: CallbackQuery, db: AsyncSession, user: ShowUserResponse, state: FSMContext):
+    await callback_query.answer() 
     result = await delete_google_oauth_data(
         GoogleOAuthDelete(user_id=user.id), db=db
     )

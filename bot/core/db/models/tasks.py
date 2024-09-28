@@ -1,26 +1,21 @@
-from sqlalchemy import Column, String, Text, Integer, ForeignKey, Enum, TIMESTAMP
+from sqlalchemy import Column, String, Text, Integer, ForeignKey, TIMESTAMP, UUID
 from datetime import datetime
-import enum
+import uuid
 
 from .base import Model
-
-class TaskStatus(enum.Enum):
-    pending = "pending"
-    in_progress = "in_progress"
-    completed = "completed"
-    canceled = "canceled"
 
 class Task(Model):
     __tablename__ = 'tasks'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     title = Column(String(255), nullable=False)
     description = Column(Text, nullable=True)
-    status = Column(Enum(TaskStatus), default=TaskStatus.pending)
     created_at = Column(TIMESTAMP, default=datetime.now())
     due_date = Column(TIMESTAMP, nullable=True)
+    start_time = Column(TIMESTAMP, nullable=True)
     end_time = Column(TIMESTAMP, nullable=True)
+    reminder_time = Column(TIMESTAMP, nullable=True)
 
     def __repr__(self):
         return f"<Task(title={self.title}, status={self.status.value})>"

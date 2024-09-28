@@ -5,8 +5,8 @@ from aiogram.fsm.context import FSMContext
 
 from ..tools.decorators import db_session_decorator
 from ..tools.services import get_user_tasks_service
-from ..ui import  scroll_keyboard
-from ..tools.classes import Cycle
+from ..ui import scroll_keyboard
+from ..ui.cycle import Cycle
 
 router = Router()
 

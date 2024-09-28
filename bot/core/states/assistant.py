@@ -5,5 +5,5 @@ class Assistant(StatesGroup):
     task_manager = State()
     edit_task = State()
     search_tasks = State()
+    free_talk = State()
     google_oauth = State()
-    

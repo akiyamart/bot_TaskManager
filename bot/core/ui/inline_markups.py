@@ -1,17 +1,14 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from ..tools.classes import Cycle
+from .cycle import Cycle
 
 def menu():
     builder = InlineKeyboardBuilder()
 
     buttons = [
-        {"text": "✍️ Добавление задачи", "callback_data": "add_task"},
-        {"text": "📋 Просмотр списка задач", "callback_data": "search_tasks"},
-        {"text": "🔎 Просмотр одной задачи", "callback_data": "list_tasks"},
-        {"text": "📊 Моя статистика", "callback_data": "get_statistics"},
-        {"text": "🤖 Общение с ИИ", "callback_data": "talk_with_AI"},
+        {"text": "📋 Cписок", "callback_data": "list_tasks"},
+        {"text": "📊 Статистика", "callback_data": "get_statistics"},
         {"text": "📅 Синхронизация с Google Calendar", "callback_data": "google_sync"},
     ]
 
@@ -20,7 +17,7 @@ def menu():
             InlineKeyboardButton(**button)
         )
     
-    builder.adjust(1, 2, 2, 1)
+    builder.adjust(1, 1, 1)
 
     return builder.as_markup()
 
@@ -28,7 +25,7 @@ def google_oauth():
     builder = InlineKeyboardBuilder()
 
     buttons = [
-        {"text": "🗑️ Отвязать google calendar", "callback_data": "google_sync_delete"},
+        {"text": "🗑️ Отвязать Google Calendar", "callback_data": "google_sync_delete"},
         {"text": '👈 Вернуться в меню', "callback_data": "menu"}
     ]
 
@@ -51,23 +48,15 @@ def back_to_menu():
         ]
     )
 
-def tasks_back_to_menu(task_id: int): 
-    builder = InlineKeyboardBuilder()
+def start_to_menu():
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text="▶️ Приступить к работе", callback_data="menu")
+            ]
+        ]
+    )
 
-    buttons = [
-        {"text": "🔧 Редактировать", "callback_data": f"edit_task_{task_id}"},
-        {"text": "❌ Удалить", "callback_data": f"delete_task_{task_id}"},
-        # {"text": "👈 Вернуться в меню", "callback_data": "menu"},
-    ]
-
-    for button in buttons: 
-        builder.add(
-            InlineKeyboardButton(**button)
-        )
-    
-    builder.adjust(2)
-
-    return builder.as_markup()
 
 def scroll_keyboard(iterable: Cycle, task_id: id):
     builder = InlineKeyboardBuilder()
@@ -75,8 +64,6 @@ def scroll_keyboard(iterable: Cycle, task_id: id):
     buttons = [
         {"text": "⬅️", "callback_data": "-1"},
         {"text": "➡️", "callback_data": "1"},
-        {"text": "🔧 Редактировать", "callback_data": f"edit_task_{task_id}"},
-        {"text": "❌ Удалить", "callback_data": f"delete_task_{task_id}"},
         {"text": "👈 Вернуться в меню", "callback_data": "menu"},
     ]
 
@@ -90,5 +77,5 @@ def scroll_keyboard(iterable: Cycle, task_id: id):
             InlineKeyboardButton(**button)
         )
 
-    builder.adjust(2, 2, 1) 
+    builder.adjust(2, 1) 
     return builder.as_markup()
